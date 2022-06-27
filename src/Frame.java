@@ -3,15 +3,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class Frame{
 
     private static JFrame frame = new JFrame();
     private static JPanel imagePanel = new JPanel();
-    private static JLabel imageLabel = new JLabel();
+    private static JLabel imageToEdit = new JLabel();
     private static JButton chooseImageButton = new JButton();
     private static JButton cutImageButton = new JButton();
-    private static BufferedImage image;
+    private static BufferedImage imageToRender;
 
     public void buildFrame(){
         frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -22,25 +23,30 @@ public class Frame{
             System.out.println(e.getMessage());
         }
 
-        imagePanel.setBackground(new java.awt.Color(153, 153, 153));
-        imagePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        chooseImageButton.setText("Choose Image");
+        chooseImageButton.setFocusPainted(false);
 
-        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
-        imagePanel.setLayout(imagePanelLayout);
-        imagePanelLayout.setHorizontalGroup(
-                imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        imagePanelLayout.setVerticalGroup(
-                imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
-        );
+        cutImageButton.setText("Cut Image");
+        cutImageButton.setFocusPainted(false);
 
         chooseImageButton.setText("Choose Image");
         chooseImageButton.setFocusPainted(false);
 
         cutImageButton.setText("Cut Image");
         cutImageButton.setFocusPainted(false);
+
+        imagePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
+        imagePanel.setLayout(imagePanelLayout);
+        imagePanelLayout.setHorizontalGroup(
+                imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(imageToEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        imagePanelLayout.setVerticalGroup(
+                imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(imageToEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(frame.getContentPane());
         frame.getContentPane().setLayout(layout);
@@ -73,7 +79,14 @@ public class Frame{
 
         chooseImageButton.addActionListener(e -> {
             File file = selectImage();
-        });
+            System.out.println(file);
+            try {
+                Image image = ImageIO.read(file);
+                renderImage(image);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+          });
     }
 
     public static File selectImage(){
@@ -84,7 +97,7 @@ public class Frame{
         return selectedFile;
     }
 
-    private static void renderImage(BufferedImage image){
-
+    private static void renderImage(Image image){
+        imageToEdit.setIcon(new ImageIcon(image));
     }
 }
