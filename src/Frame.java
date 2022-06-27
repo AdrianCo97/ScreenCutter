@@ -1,6 +1,9 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -76,6 +79,7 @@ public class Frame{
         frame.pack();
         frame.setVisible(true);
 
+        //--------------------Action Listeners--------------------//
         chooseImageButton.addActionListener(e -> {
             File file = selectImage();
             System.out.println(file);
@@ -86,6 +90,19 @@ public class Frame{
                 ex.printStackTrace();
             }
           });
+
+        imagePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+        });
+
+        //--------------------Action Listeners--------------------//
     }
 
     public static File selectImage(){
@@ -98,5 +115,9 @@ public class Frame{
 
     private static void renderImage(Image image){
         imageToEdit.setIcon(new ImageIcon(image));
+    }
+
+    private static void markImagePart(){
+
     }
 }
