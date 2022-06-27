@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -91,13 +92,14 @@ public class Frame{
             }
           });
 
-        imagePanel.addMouseListener(new MouseAdapter() {
+        imagePanel.addMouseMotionListener(new MouseMotionListener() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-
+            public void mouseDragged(MouseEvent e) {
+                
             }
+
             @Override
-            public void mouseReleased(MouseEvent e) {
+            public void mouseMoved(MouseEvent e) {
 
             }
         });
