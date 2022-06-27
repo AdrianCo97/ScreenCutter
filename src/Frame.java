@@ -12,7 +12,6 @@ public class Frame{
     private static JLabel imageToEdit = new JLabel();
     private static JButton chooseImageButton = new JButton();
     private static JButton cutImageButton = new JButton();
-    private static BufferedImage imageToRender;
 
     public void buildFrame(){
         frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
