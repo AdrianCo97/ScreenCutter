@@ -9,16 +9,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Frame{
+public class Frame extends JFrame{
 
-    private static JFrame frame = new JFrame();
-    private static JPanel imagePanel = new JPanel();
-    private static JLabel imageToEdit = new JLabel();
-    private static JButton chooseImageButton = new JButton();
-    private static JButton cutImageButton = new JButton();
+    private static JPanel imagePanel;
+    private static JLabel imageToEdit;
+    private static JButton chooseImageButton;
+    private static JButton cutImageButton;
 
     public void buildFrame(){
-        frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        imagePanel = new JPanel();
+        imageToEdit = new JLabel();
+        chooseImageButton = new JButton();
+        cutImageButton = new JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //Windows Look and feel
@@ -51,8 +55,8 @@ public class Frame{
                         .addComponent(imageToEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(frame.getContentPane());
-        frame.getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -77,8 +81,8 @@ public class Frame{
                                 .addContainerGap())
         );
 
-        frame.pack();
-        frame.setVisible(true);
+        pack();
+        setVisible(true);
 
         //--------------------Action Listeners--------------------//
         chooseImageButton.addActionListener(e -> {
@@ -92,17 +96,19 @@ public class Frame{
             }
           });
 
-        imagePanel.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                
-            }
+        if(!(imageToEdit == null)){
+            imagePanel.addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+                    System.out.println(e.getX() + ", " + e.getY());
+                }
 
-            @Override
-            public void mouseMoved(MouseEvent e) {
+                @Override
+                public void mouseMoved(MouseEvent e) {
 
-            }
-        });
+                }
+            });
+        }
 
         //--------------------Action Listeners--------------------//
     }
@@ -117,9 +123,5 @@ public class Frame{
 
     private static void renderImage(Image image){
         imageToEdit.setIcon(new ImageIcon(image));
-    }
-
-    private static void markImagePart(){
-
     }
 }
